@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Predicción de fallecimientos en accidentes</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="../style/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../style/js/bootstrap.min.js">
+<link rel="stylesheet" type="text/css" href="../static/css/style.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet"/>
+<script>
+$(document).ready(function(){
+  $("#datepicker").datepicker({
+     format: "yyyy",
+     viewMode: "years", 
+     minViewMode: "years",
+     autoclose:true
+  });   
+})
+
+
+</script>
+  
+</head>
+
+<!-- style="background: #000;"-->
+<body>
+ <div class="login container-md">
+	<h1>Predicción de fallecimientos en accidentes</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+      <h4>Fecha y hora del accidente</h4>
+      <input type="text" id="c_year" name="c_year" placeholder="Año (YYYY)" required="required" />
+      <input type="text" id="c_mnth" name="c_mnth" placeholder="Mes (XX)" required="required" />
+      <input type="text" id="c_wday" name="c_wday" placeholder="Día de la semana (X)" required="required" />
+      <input type="text" id="c_hour" name="c_hour" placeholder="Hora (XX)" required="required" />
+    
+          
+      <h4>Datos del vehículo</h4>    
+      <input type="text" id="c_conf" name="c_conf" placeholder="Tipo de colisión (XX)" required="required" />
+      <input type="text" id="v_type" name="v_type" placeholder="Tipo de vehículo (XX)" required="required" />
+      <input type="text" id="c_vehs" name="c_vehs" placeholder="Número de vehículos involucrados (XX)" required="required" />
+
+
+      <h4>Condiciones del accidente</h4> 
+      <input type="text" id="c_wthr" name="c_wthr" placeholder="Tiempo atmosférico (X)" required="required" />
+      <input type="text" id="c_rcfg" name="c_rcfg" placeholder="Configuración de carretera (XX)" required="required" />
+      <input type="text" id="c_raln" name="c_raln" placeholder="Configuración del tramo (X)" required="required" />
+    
+      
+      <h4>Datos del siniestrado</h4>   
+      <input type="text" id="p_sex" name="p_sex" placeholder="Sexo (X)" required="required" />
+      <input type="text" id="p_psn" name="p_psn" placeholder="Posición del pasajero (XX >10)" required="required" />
+      <input type="text" id="p_user" name="p_user" placeholder="Rol de la persona (X)" required="required" />
+      <input type="text" id="p_age" name="p_age" placeholder="Edad (XX)" required="required" />
+      
+      <br>
+      <br>
+      <br>
+
+      <button type="submit" class="btn btn-lg btn-primary">Predecir resultado</button>
+    </form>
+
+   <br>
+   <br>
+   {{ prediction_text }}
+
+ </div>
+
+
+</body>
+
+
+</html>
